@@ -1,30 +1,29 @@
 package br.com.adilsondjr.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.adilsondjr.cursomc.domain.Categoria;
+import br.com.adilsondjr.cursomc.services.CategoriaService;
 
 @RestController
 @RequestMapping(path = "/categoria")
 public class CategoriaResource {
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Categoria> listar() {
+	@Autowired
+	private CategoriaService service; 
 		
-		Categoria c1 = new Categoria(1, "Adilson");
-		Categoria c2 = new Categoria(2, "Xicao");
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
-		List<Categoria> l = new ArrayList<>();
+		Categoria c1 = service.buscar(id);
 		
-		l.add(c1);
-		l.add(c2);
+		return ResponseEntity.ok().body(c1);
 		
-		return l;
 	}
 
 }

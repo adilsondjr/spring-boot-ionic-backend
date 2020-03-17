@@ -2,6 +2,8 @@ package br.com.adilsondjr.cursomc.resources;
 
 import java.net.URI;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +20,15 @@ import br.com.adilsondjr.cursomc.services.CategoriaService;
 @RequestMapping(path = "/categoria")
 public class CategoriaResource {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(CategoriaResource.class);
+
 	@Autowired
 	private CategoriaService service; 
 		
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		
+		LOG.info("Buscando a categoria: " + id);
 		Categoria c1 = service.find(id);		
 		return ResponseEntity.ok().body(c1);
 		

@@ -1,6 +1,8 @@
 package br.com.adilsondjr.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.ws.RequestWrapper;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.adilsondjr.cursomc.domain.Categoria;
+import br.com.adilsondjr.cursomc.dto.CategoriaDTO;
 import br.com.adilsondjr.cursomc.services.CategoriaService;
 
 @RestController
@@ -34,6 +37,15 @@ public class CategoriaResource {
 		Categoria c1 = service.find(id);		
 		return ResponseEntity.ok().body(c1);
 		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		
+		LOG.info("Buscando todas as categorias: ");
+		List<Categoria> cat = service.findAll();
+		List<CategoriaDTO> catDTO = cat.stream().map(cats -> new CategoriaDTO(cats)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(catDTO);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

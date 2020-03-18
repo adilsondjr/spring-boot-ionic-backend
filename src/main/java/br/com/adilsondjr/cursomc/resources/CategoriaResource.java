@@ -2,6 +2,8 @@ package br.com.adilsondjr.cursomc.resources;
 
 import java.net.URI;
 
+import javax.xml.ws.RequestWrapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,12 @@ public class CategoriaResource {
 		cat.setId(id);
 		cat = service.update(cat);
 		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
